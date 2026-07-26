@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export type DestinationContinent =
     | "Africa"
     | "Antarctica"
@@ -71,8 +73,47 @@ export interface DestinationLocation {
     region?: string;
 }
 
+/** Raw MongoDB document shape — _id is a BSON ObjectId */
+export interface DestinationDocument {
+    _id: ObjectId;
+    slug?: string;
+    name?: string;
+    title?: string;
+    city?: string;
+    country?: string;
+    countryCode?: string;
+    region?: string;
+    continent?: DestinationContinent;
+    location?: DestinationLocation;
+    description?: string;
+    shortDescription?: string;
+    coverImage?: string;
+    images?: string[];
+    image?: string;
+    emoji?: string;
+    categories?: DestinationCategory[];
+    tags?: string[];
+    coordinates?: GeoCoordinates;
+    rating?: number;
+    reviewCount?: number;
+    weather?: WeatherInfo;
+    budgetLevel?: BudgetLevel;
+    averageDailyCostUSD?: number;
+    avgBudgetPerDay?: number;
+    currency?: Currency;
+    languages?: string[];
+    timeZone?: string;
+    bestTimeToVisit?: string;
+    highlights?: Attraction[];
+    isFeatured?: boolean;
+    isTrending?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+/** API / client shape — _id is serialized to a plain string */
 export interface Destination {
-    id: string;
+    _id: string;
     slug?: string;
     name?: string;
     title?: string;
@@ -110,7 +151,7 @@ export interface Destination {
 
 export type DestinationSummary = Pick<
     Destination,
-    | "id"
+    | "_id"
     | "slug"
     | "name"
     | "title"
